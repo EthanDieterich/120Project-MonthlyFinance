@@ -16,7 +16,7 @@ def createfile_Name():
         startMonth = input('Start Month(Abrv):')
         startYear = input('Start Year(2 digit):')
         if startMonth in months and startYear in years:
-            file_Name = r'C://Users//ethan//OneDrive//Documents//MonthlyFinance//'+startMonth+startYear+'Record.csv'
+            file_Name = startMonth+startYear+'Record.csv'
         else: 
             print('Try again')
            

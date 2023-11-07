@@ -1,6 +1,8 @@
 #This code uses multiple functions to read a csv file into a matrix then
 #manipulate that matrix 
 #column labels - Index - Cost - Name - Category - description 
+#ADD NAMES HERE
+#Ethan Dieterich, 
 import csv
 import os
 

@@ -2,7 +2,7 @@
 #manipulate that matrix 
 #column labels - Index - Cost - Name - Category - description 
 #ADD NAMES HERE
-#Ethan Dieterich, #Logan Young
+#Ethan Dieterich, #Logan Young , # Natnael Tadesse
 import csv
 import os
 

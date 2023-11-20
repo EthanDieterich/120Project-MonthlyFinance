@@ -91,10 +91,37 @@ def addToRecord(tempData):
         elif choice == '0':
             break
     return
+#This code prompts the user to enter the details for a new row, such as Cost, Name, Category, and Description. 
+#It then appends this row to the tempData matrix. The user is given the option to add more rows or exit the loop.
+    
 
+#(def deleteFromRecord(tempData):
+    #print("You selected option 4.")
+   # return)#
 def deleteFromRecord(tempData):
     print("You selected option 4.")
+    if len(tempData) <= 1:
+        print("Data set is empty. Nothing to delete.")
+        return
+
+    try:
+        index_to_delete = int(input("Enter the index of the row to delete: "))
+        if index_to_delete < 0 or index_to_delete >= len(tempData):
+            print("Invalid index. No row deleted.")
+            return
+
+        deleted_row = tempData.pop(index_to_delete)
+        print("Row deleted:")
+        print(deleted_row)
+
+    except ValueError:
+        print("Invalid input. Please enter a valid index.")
+
     return
+#This code first checks if there are rows in the dataset (tempData) to delete. 
+#Then, it prompts the user to enter the index of the row they want to delete. 
+#It validates the input to ensure it's a valid integer and within the range of the dataset. 
+#If everything is valid, it deletes the row at the specified index and prints the deleted row.
     
 def sumRecord(tempData):
     print('You selected option 5.')

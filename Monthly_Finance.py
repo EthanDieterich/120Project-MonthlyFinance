@@ -104,18 +104,19 @@ def deleteFromRecord(tempData):
         print("Data set is empty. Nothing to delete.")
         return
 
-    try:
-        index_to_delete = int(input("Enter the index of the row to delete: "))
-        if index_to_delete < 0 or index_to_delete >= len(tempData):
+    index_to_delete = input("Enter the index of the row to delete: ")
+
+    if index_to_delete.isdigit():
+        index_to_delete = int(index_to_delete)
+
+        if 0 <= index_to_delete < len(tempData):
+            deleted_row = tempData.pop(index_to_delete)
+            print("Row deleted:")
+            print(deleted_row)
+        else:
             print("Invalid index. No row deleted.")
-            return
-
-        deleted_row = tempData.pop(index_to_delete)
-        print("Row deleted:")
-        print(deleted_row)
-
-    except ValueError:
-        print("Invalid input. Please enter a valid index.")
+    else:
+        print("Invalid input. Please enter a valid index (a non-negative integer).")
 
     return
 #This code first checks if there are rows in the dataset (tempData) to delete. 

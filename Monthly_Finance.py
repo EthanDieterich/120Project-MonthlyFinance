@@ -2,7 +2,7 @@
 #manipulate that matrix 
 #column labels - Index - Cost - Name - Category - description 
 #ADD NAMES HERE
-#Ethan Dieterich, #Logan Young , # Natnael Tadesse #Jahmaal Hall
+#Ethan Dieterich, #Logan Young , # Natnael Tadesse, #Jahmaal Hall, and #Chris Cosgrove
 import csv
 import os
 
@@ -130,6 +130,23 @@ def sumRecord(tempData):
 
 def sortRecord(tempData):
     print('You selected option 6.')
+    if len(tempData) <= 1:
+        print("Data set is empty or contains only one row, nothing to sort.")
+        return
+    
+    print("Select a column to sort by:")
+    for i, header in enumerate(tempData[0]):
+        print(f"{i + 1}. {header}")
+    try:
+        column_choice = int(input("Enter the number corresponding to the column: ")) - 1
+        if 0 <= column_choice < len(tempData[0]):
+            sorted_data = sorted(tempData[1:], key=lambda row: row[column_choice])
+            tempData = [tempData[0]] + sorted_data
+            print("Record sorted successfully.")
+        else:
+            print("Invalid column choice. No sorting performed.")
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
     return
 
             

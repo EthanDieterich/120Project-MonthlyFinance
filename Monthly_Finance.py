@@ -1,186 +1,193 @@
-#This code uses multiple functions to read a csv file into a matrix then
+#This code uses multiple class methods to read a csv file into a matrix then
 #manipulate that matrix 
-#column labels - Index - Cost - Name - Category - description 
+#column labels - Index - Cost - Name - Category  
 #ADD NAMES HERE
-#Ethan Dieterich, #Logan Young , # Natnael Tadesse, #Jahmaal Hall, and #Chris Cosgrove
+#Ethan Dieterich, Logan Young , Natnael Tadesse, Jahmaal Hall, and Chris Cosgrove
 import csv
 import os
 
-
-def createfile_Name():
-    print('\nEnter Finance Record name\n------------------')
-    #accepted value range
-    months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec",'test'}
-    years = {'18','19','20','21','22','23','24','test'}
-    
-    file_Name = 'null'
-    while (file_Name == 'null'):
-        startMonth = input('Start Month(Abrv):')
-        startYear = input('Start Year(2 digit):')
-        if startMonth in months and startYear in years:
-            file_Name = startMonth+startYear+'Record.csv'
-        else: 
-            print('Try again')
-           
-    return file_Name
-    
-
-def openRecord(tempData):
-    header = ['Index', 'Date', 'Cost', 'Name', 'Category', 'Description']
-    
-    print("You Selected Open Record.")
-      #User Input
-    file_Name = createfile_Name()
-    if os.path.exists(file_Name):
-        print("\nOpening",file_Name+'...')
-        with open(file_Name, mode = 'r') as file:
-            csv_reader = csv.reader(file)
-    # Iterate through each row in the CSV and append it to the matrix
-            for (row) in csv_reader:
-                tempData.append(row)
-        return 
+class CSV_File_Manager:
+    def __init__(self, file_name):
+        self.file_name = file_name
+        self.tempData = []
         
-    else:
-        print("File Does not exist." )
-        choice = input("\nwould you like to create a new file? Enter Yes(1) No(0): ")
-        if choice == '1':
-            with open(file_Name, mode = 'w', newline = '') as file:
-                csv_writer = csv.writer(file)
-                csv_writer.writerow(header)
-                tempData.append(header)
-            return 
-        elif choice == '0': 
-            return 
-        
-        
-
-def closeRecord(tempData):
-    print("You Selected Close Record.")
-    file_Name = createfile_Name()
-    with open(file_Name, mode = 'w', newline = '') as file:
-        csv_writer = csv.writer(file)
-        for row in tempData:
-            csv_writer.writerow(row)
-        tempData.clear()
-    return
+    def create_file_name(self):
+        print('\nEnter Finance Record Name\n------------------')
+        #accepted value range
+        months = {"Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec",'test'}
+        years = {'18','19','20','21','22','23','24','test'}
     
+        file_name = 'null'
+        while (file_name == 'null'):
+            startMonth = input('Start Month(Abrv):')
+            startYear = input('Start Year(2 digit):')
+            if startMonth in months and startYear in years:
+                file_name = startMonth+startYear+'Record.csv'
+            else: 
+                print('Try again')
+        self.file_name = file_name
 
-def addToRecord(tempData):
-    i = 0
-    while i < len(tempData) and tempData[i]:
-        i += 1
-    while True:
-        print("\nCreating row", i)
-        row = []
-        Index = i
-        row.append(Index)
-        Cost = input("Enter Cost: ")
-        row.append(Cost)
-        Name = input("Enter Name: ")
-        row.append(Name)
-        Category = input("Enter Category: ")
-        row.append(Category)
-        Description = input("Enter Description: ") 
-        row.append(Description)
+    def open_record(self):
+        header = ['Index', 'Cost', 'Name', 'Category']
+    
+        print("You Selected Open Record.")
+        #User Input
+        self.create_file_name()
+        if os.path.exists(self.file_name):
+            print("\nOpening",self.file_name+'...')
+            with open(self.file_name, mode = 'r') as file:
+                csv_reader = csv.reader(file)
+        # Iterate through each row in the CSV and append it to the matrix
+                for (row) in csv_reader:
+                    self.tempData.append(row)
         
-        tempData.append(row)
-        i+=1
-        choice = input("Would you like to add more? Enter Yes(1) No(0):")
-        if choice == '1':
-            continue
-        elif choice == '0':
-            break
-    return
-#This code prompts the user to enter the details for a new row, such as Cost, Name, Category, and Description. 
+        else:
+            print("File does not exist." )
+            choice = input("\nwould you like to create a new file? Enter Yes(1) No(0): ")
+            if choice == '1':
+                with open(self.file_name, mode = 'w', newline = '') as file:
+                    csv_writer = csv.writer(file)
+                    csv_writer.writerow(header)
+                    self.tempData.append(header) 
+        
+    def close_record(self):
+        print("You Selected Close Record.")
+        print("Would you like to save file as", self.file_name+str("(0)"), "or choose a new name(1)?")
+        choice = input("Enter choice: ")
+        if int(choice) == 1:
+            self.create_file_name()
+        with open(self.file_name, mode = 'w', newline = '') as file:
+            csv_writer = csv.writer(file)
+            for row in self.tempData:
+                csv_writer.writerow(row)
+            print("File saved as", self.file_name)
+            self.tempData.clear()   
+            self.file_name = ''
+            
+    def add_to_record(self):
+        print("You Selected Add to Record")
+        i = len(self.tempData)
+        categories = {
+            'R' : "Rent/Mortgage",
+            'F' : "Food",
+            'T' : "Transportation",
+            'U' : "Utilities",
+            'S' : "Subscriptions",
+            'P' : "Personal",
+            'I' : "Investment/Savings",
+            'D' : "Debt/Loan Payment",
+            'H' : "Health",
+            'M' : "Misc"
+            }
+        while True:
+            print("\nCreating row", i)
+            row = [i]
+        
+            cost = input("Enter Cost: ")
+            row.append(cost)
+            name = input("Enter Name: ")
+            row.append(name)
+            print("[Rent/Mortgage, Food, Transportation, Utilities, Subscriptions]")
+            print("[Personal, Savings/Investment, Debt/Loan Payment, Health, Misc]")
+            c = input("Enter the first letter of the selected Category: ")
+            row.append(categories[c])
+        
+            self.tempData.append(row)
+            i += 1
+            choice = input("Would you like to add more? Enter Yes(1) No(0):")
+            if choice == '0':
+                break
+    
+#This code prompts the user to enter the details for a new row, such as Cost, Name, and Category. 
 #It then appends this row to the tempData matrix. The user is given the option to add more rows or exit the loop.
     
+    def delete_from_record(self):
+        print("You Selected Delete From Record.")
+        if len(self.tempData) <= 1:
+            print("Data set is empty. Nothing to delete.")
+            return
 
-#(def deleteFromRecord(tempData):
-    #print("You selected option 4.")
-   # return)#
-def deleteFromRecord(tempData):
-    print("You selected option 4.")
-    if len(tempData) <= 1:
-        print("Data set is empty. Nothing to delete.")
-        return
+        index_to_delete = input("Enter the index of the row to delete: ")
 
-    index_to_delete = input("Enter the index of the row to delete: ")
-
-    if index_to_delete.isdigit():
-        index_to_delete = int(index_to_delete)
-
-        if 0 <= index_to_delete < len(tempData):
-            deleted_row = tempData.pop(index_to_delete)
-            print("Row deleted:")
-            print(deleted_row)
+        if index_to_delete.isdigit():
+            index_to_delete = int(index_to_delete)
+           
+            if 0 <= index_to_delete < len(self.tempData):
+                deleted_row = self.tempData.pop(index_to_delete)
+                print("Row deleted:")
+                print(deleted_row)
+            else:
+                print("Invalid index. No row deleted.")
         else:
-            print("Invalid index. No row deleted.")
-    else:
-        print("Invalid input. Please enter a valid index (a non-negative integer).")
+            print("Invalid input. Please enter a valid index (a non-negative integer).")
 
-    return
 #This code first checks if there are rows in the dataset (tempData) to delete. 
 #Then, it prompts the user to enter the index of the row they want to delete. 
 #It validates the input to ensure it's a valid integer and within the range of the dataset. 
 #If everything is valid, it deletes the row at the specified index and prints the deleted row.
     
-def sumRecord(tempData):
-    print('You selected option 5.')
-    return
+    def sum_record(self):
+        print('You Selected Sum Record')
+        
 
-def sortRecord(tempData):
-    print('You selected option 6.')
-    if len(tempData) <= 1:
-        print("Data set is empty or contains only one row. Nothing to sort.")
-        return
-    
-    # Prompt the user for the sorting order
-    print("Select the sorting order:")
-    print("1. Sort by Category")
-    print("2. Sort by Cost")
-    
-    try:
-        order_choice = int(input("Enter the number corresponding to the sorting order: "))
-        if order_choice == 1:
-            # Sort by Category only
-            tempData[0:] = sorted(tempData[0:], key=lambda row: row[3])  # 3 corresponds to the "Category" column
-        elif order_choice == 2:
-            tempData[0:] = sorted(tempData[0:], key=lambda row: float(row[1]))  # 1 is "Cost" column
-        else:
-            print("Invalid sorting order choice. No sorting performed.")
+    def sort_record(self):
+        print('You Selected Sort Record.')
+        if len(self.tempData) <= 1:
+            print("Data set is empty or contains only one row. Nothing to sort.")
             return
-        print("Record sorted successfully.")
-    except ValueError:
-        print("Invalid input. Please enter a valid number.")
-
-    return tempData
-
-            
     
-if __name__ == '__main__':
-    #Menu
-    menu = {
-        '1': openRecord,
-        '2': closeRecord,
-        '3': addToRecord,
-        '4': deleteFromRecord,
-        '5': sumRecord,
-        '6': sortRecord
-        }
-    tempData = []
-    file_Name = ""
-    while True:
-        if len(tempData) == 0:
-            print("Data set not selected")
-        elif len(tempData) == 1: 
+        # Prompt the user for the sorting order
+        print("Select the sorting order:")
+        print("0. Sort by Index")
+        print("1. Sort by Category")
+        print("2. Sort by Cost")
+    
+        try:
+            order_choice = input("Enter the number corresponding to the sorting order: ")
+            if int(order_choice) == 0:
+                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: int(row[0]))
+            if int(order_choice) == 1:
+                # Sort by Category
+                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: row[3])  # 3 corresponds to the "Category" column
+            elif int(order_choice) == 2:
+                #sort by Cost
+                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: float(row[1]))  # 1 is "Cost" column
+            else:
+                print("Invalid sorting order choice. No sorting performed.")
+                return
+            print("Record sorted successfully.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+    
+    def display_data(self):
+        if len(self.tempData) == 0:
+           print("Data set not selected")
+        elif len(self.tempData) == 1: 
+            print(self.file_name)
             print("Data set is empty")
-        elif len(tempData) > 1:
-            for row in tempData:
+        elif len(self.tempData) > 1:
+            print(self.file_name)
+            for row in self.tempData: 
                 print()
                 for element in row: 
                     print(element, end=', ')
-                    
         print("\n---------------")
+       
+if __name__ == '__main__':
+    #Menu
+    csv_file = CSV_File_Manager("")
+    menu = {
+        '1': csv_file.open_record,
+        '2': csv_file.close_record,
+        '3': csv_file.add_to_record,
+        '4': csv_file.delete_from_record,
+        '5': csv_file.sum_record,
+        '6': csv_file.sort_record
+        }
+    while True:
+        print("---------------")
+        csv_file.display_data()
+        
         print("Menu:")
         print("1. Open Record")
         print("2. Close and Save Record")
@@ -192,9 +199,9 @@ if __name__ == '__main__':
         print("---------------")
     
         choice = input("Enter Your Choice: ")
-    
+        print()
         if choice in menu:
-            menu[choice](tempData)
+            menu[choice]()
         elif choice == '7':
             print('bye')
             break

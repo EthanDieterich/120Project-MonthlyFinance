@@ -131,23 +131,29 @@ def sumRecord(tempData):
 def sortRecord(tempData):
     print('You selected option 6.')
     if len(tempData) <= 1:
-        print("Data set is empty or contains only one row, nothing to sort.")
+        print("Data set is empty or contains only one row. Nothing to sort.")
         return
     
-    print("Select a column to sort by:")
-    for i, header in enumerate(tempData[0]):
-        print(f"{i + 1}. {header}")
+    # Prompt the user for the sorting order
+    print("Select the sorting order:")
+    print("1. Sort by Category")
+    print("2. Sort by Cost")
+    
     try:
-        column_choice = int(input("Enter the number corresponding to the column: ")) - 1
-        if 0 <= column_choice < len(tempData[0]):
-            sorted_data = sorted(tempData[1:], key=lambda row: row[column_choice])
-            tempData = [tempData[0]] + sorted_data
-            print("Record sorted successfully.")
+        order_choice = int(input("Enter the number corresponding to the sorting order: "))
+        if order_choice == 1:
+            # Sort by Category only
+            tempData[0:] = sorted(tempData[0:], key=lambda row: row[3])  # 3 corresponds to the "Category" column
+        elif order_choice == 2:
+            tempData[0:] = sorted(tempData[0:], key=lambda row: float(row[1]))  # 1 is "Cost" column
         else:
-            print("Invalid column choice. No sorting performed.")
+            print("Invalid sorting order choice. No sorting performed.")
+            return
+        print("Record sorted successfully.")
     except ValueError:
         print("Invalid input. Please enter a valid number.")
-    return
+
+    return tempData
 
             
     

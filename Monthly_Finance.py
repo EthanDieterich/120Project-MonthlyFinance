@@ -97,10 +97,6 @@ class CSV_File_Manager:
             choice = input("Would you like to add more? Enter Yes(1) No(0):")
             if choice == '0':
                 break
-    
-#This code prompts the user to enter the details for a new row, such as Cost, Name, and Category. 
-#It then appends this row to the tempData matrix. The user is given the option to add more rows or exit the loop.
-    
     def delete_from_record(self):
         print("You Selected Delete From Record.")
         if len(self.tempData) <= 1:
@@ -120,12 +116,6 @@ class CSV_File_Manager:
                 print("Invalid index. No row deleted.")
         else:
             print("Invalid input. Please enter a valid index (a non-negative integer).")
-
-#This code first checks if there are rows in the dataset (tempData) to delete. 
-#Then, it prompts the user to enter the index of the row they want to delete. 
-#It validates the input to ensure it's a valid integer and within the range of the dataset. 
-#If everything is valid, it deletes the row at the specified index and prints the deleted row.
-    
     def sum_record(self):
         print('You Selected Sum Record')
         

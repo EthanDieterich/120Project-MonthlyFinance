@@ -118,7 +118,23 @@ class CSV_File_Manager:
             print("Invalid input. Please enter a valid index (a non-negative integer).")
     def sum_record(self):
         print('You Selected Sum Record')
+        column_to_sum = 1
         
+        if len(self.tempData) <= 1:
+            print("Data set is empty.")
+            return
+        if not self.tempData:
+            print("No data selected pr the data set is empty")
+        
+        total_sum = 0
+        for row in self.tempData:
+            try:
+                cost = float(row[column_to_sum])
+                total_sum += cost
+            except ValueError:
+                print("Invalid value found while calculating the sum.")
+        
+        print(f"Total sum of costs: {total_sum}")
 
     def sort_record(self):
         print('You Selected Sort Record.')

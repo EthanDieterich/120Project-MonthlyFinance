@@ -151,13 +151,13 @@ class CSV_File_Manager:
         try:
             order_choice = input("Enter the number corresponding to the sorting order: ")
             if int(order_choice) == 0:
-                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: int(row[0]))
+                self.tempData[0:] = sorted(self.tempData[0:], key=lambda row: int(row[0]))
             if int(order_choice) == 1:
                 # Sort by Category
-                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: row[3])  # 3 corresponds to the "Category" column
+                self.tempData[0:] = sorted(self.tempData[0:], key=lambda row: row[3])  # 3 corresponds to the "Category" column
             elif int(order_choice) == 2:
                 #sort by Cost
-                self.tempData[1:] = sorted(self.tempData[1:], key=lambda row: float(row[1]))  # 1 is "Cost" column
+                self.tempData[0:] = sorted(self.tempData[0:], key=lambda row: float(row[1]))  # 1 is "Cost" column
             else:
                 print("Invalid sorting order choice. No sorting performed.")
                 return
